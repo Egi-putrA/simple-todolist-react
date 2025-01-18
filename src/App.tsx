@@ -9,22 +9,14 @@ let completedTasks = [
 ]
 
 function App() {
-  const [tasks, setTask] = useState({ 
-    current: currentTasks,
-    completed: completedTasks
-  })
+  const [ currTasks, setCurrTask ] = useState(currentTasks)
+  const [ compTasks, setCompTasks ] = useState(completedTasks)
 
   function addTask(formData) {
-    alert(formData)
     const name = formData.get('name')
     const dueDate = formData.get('due_date')
 
-    setTask(tasks => {
-      return { 
-        completed: tasks.completed, 
-        current: [ ...tasks.current, { name, dueDate } ]
-      }
-    })
+    setCurrTask(tasks => [ { name, dueDate }, ...currTasks ])
   }
 
   // TODO: Both current and completed task should be sorted by date
@@ -40,7 +32,7 @@ function App() {
       </form>
       <h2>Current tasks</h2>
       <ul>
-        {tasks.current.map((task, index) => (
+        {currTasks.map((task, index) => (
           <li key={index}>
             <p>{task.name}</p>
             <p> Due date: <span>{task.dueDate}</span></p>
@@ -49,7 +41,7 @@ function App() {
       </ul>
       <h2>Completed tasks</h2>
       <ul>
-        {tasks.completed.map((task, index) => (
+        {compTasks.map((task, index) => (
           <li key={index}>
             <p>{task.name}</p>
             <p> Due date: <span>{task.dueDate}</span></p>
