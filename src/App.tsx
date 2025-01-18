@@ -5,14 +5,27 @@ let currentTasks = [
 ]
 
 let completedTasks = [
-  { name: 'Tugas 2', dueDate: Date() }
+  { name: 'Tugas 2', dueDate: Date(), completeDate: Date() }
 ]
 
 function App() {
   const [tasks, setTask] = useState({ 
-    current: currentTasks, 
-    completed: completedTasks 
+    current: currentTasks,
+    completed: completedTasks
   })
+
+  function addTask(formData) {
+    alert(formData)
+    const name = formData.get('name')
+    const dueDate = formData.get('due_date')
+
+    setTask(tasks => {
+      return { 
+        completed: tasks.completed, 
+        current: [ ...tasks.current, { name, dueDate } ]
+      }
+    })
+  }
 
   // TODO: Both current and completed task should be sorted by date
   // TODO: Each list should be can edit
@@ -20,9 +33,9 @@ function App() {
   return (
     <div className="container">
       <h1>Simple todo list</h1>
-      <form>
-        <input type="text" />
-        <input type="date"/>
+      <form action={addTask}>
+        <input type="text" name="name"/>
+        <input type="date" name="due_date"/>
         <button type="submit">Add task</button>
       </form>
       <h2>Current tasks</h2>
